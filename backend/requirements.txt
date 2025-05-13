@@ -1,0 +1,6 @@
+flask
+pytest
+fastapi
+uvicorn
+pymysql
+sqlalchemy
