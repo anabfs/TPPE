@@ -18,16 +18,16 @@ def adicionar_item_venda(item_venda: ItemVendaCreate, db: Session = Depends(get_
     db.refresh(novo_item)
     return novo_item
 
-@router.get("/itens-venda/{id}", response_model=ItemVendaBase)
-def buscar_item_venda(id: int, db: Session = Depends(get_db)):
-    item = db.query(ModeloItemVenda).filter(ModeloItemVenda.id == id).first()
+@router.get("/itens-venda/{item_id}", response_model=ItemVendaBase)
+def buscar_item_venda(item_id: int, db: Session = Depends(get_db)):
+    item = db.query(ModeloItemVenda).filter(ModeloItemVenda.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item de venda não encontrado")
     return item
 
-@router.delete("/itens-venda/{id}")
-def remover_item_venda(id: int, db: Session = Depends(get_db)):
-    item = db.query(ModeloItemVenda).filter(ModeloItemVenda.id == id).first()
+@router.delete("/itens-venda/{item_id}")
+def remover_item_venda(item_id: int, db: Session = Depends(get_db)):
+    item = db.query(ModeloItemVenda).filter(ModeloItemVenda.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item de venda não encontrado")
     db.delete(item)

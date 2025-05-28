@@ -18,16 +18,16 @@ def adicionar_vendedor(vendedor: VendedorCreate, db: Session = Depends(get_db)):
     db.refresh(novo_vendedor)
     return novo_vendedor
 
-@router.get("/vendedores/{id}", response_model=VendedorBase)
-def buscar_vendedor(id: int, db: Session = Depends(get_db)):
-    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == id).first()
+@router.get("/vendedores/{vendedor_id}", response_model=VendedorBase)
+def buscar_vendedor(vendedor_id: int, db: Session = Depends(get_db)):
+    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == vendedor_id).first()
     if not vendedor:
         raise HTTPException(status_code=404, detail="Vendedor não encontrado")
     return vendedor
 
-@router.delete("/vendedores/{id}")
-def remover_vendedor(id: int, db: Session = Depends(get_db)):
-    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == id).first()
+@router.delete("/vendedores/{vendedor_id}")
+def remover_vendedor(vendedor_id: int, db: Session = Depends(get_db)):
+    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == vendedor_id).first()
     if not vendedor:
         raise HTTPException(status_code=404, detail="Vendedor não encontrado")
     db.delete(vendedor)

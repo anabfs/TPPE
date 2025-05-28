@@ -18,16 +18,16 @@ def adicionar_produto(produto: ProdutoCreate, db: Session = Depends(get_db)):
     db.refresh(novo_produto)
     return novo_produto
 
-@router.get("/produtos/{id}", response_model=ProdutoBase)
-def buscar_produto(id: int, db: Session = Depends(get_db)):
-    produto = db.query(ModeloProduto).filter(ModeloProduto.id == id).first()
+@router.get("/produtos/{produto_id}", response_model=ProdutoBase)
+def buscar_produto(produto_id: int, db: Session = Depends(get_db)):
+    produto = db.query(ModeloProduto).filter(ModeloProduto.id == produto_id).first()
     if not produto:
         raise HTTPException(status_code=404, detail="Produto não encontrado")
     return produto
 
-@router.delete("/produtos/{id}")
-def remover_produto(id: int, db: Session = Depends(get_db)):
-    produto = db.query(ModeloProduto).filter(ModeloProduto.id == id).first()
+@router.delete("/produtos/{produto_id}")
+def remover_produto(produto_id: int, db: Session = Depends(get_db)):
+    produto = db.query(ModeloProduto).filter(ModeloProduto.id == produto_id).first()
     if not produto:
         raise HTTPException(status_code=404, detail="Produto não encontrado")
     db.delete(produto)
