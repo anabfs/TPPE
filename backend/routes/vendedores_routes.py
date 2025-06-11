@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from modelo.ModeloVendedor import ModeloVendedor
+from models.ModeloVendedor import ModeloVendedor
 from database import get_db
 from schemas import VendedorCreate, VendedorBase
 

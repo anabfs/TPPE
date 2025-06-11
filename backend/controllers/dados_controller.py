@@ -1,4 +1,4 @@
-from modelo.ModeloDados import ModeloDados
+from models.ModeloDados import ModeloDados
 
 class ControleDados:
     """

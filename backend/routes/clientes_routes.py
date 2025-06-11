@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from modelo.ModeloCliente import ModeloCliente
+from models.ModeloCliente import ModeloCliente
 from database import get_db
 from schemas import ClienteCreate, ClienteResponse
 
