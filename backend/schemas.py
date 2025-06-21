@@ -20,15 +20,16 @@ class ClienteUpdate(BaseModel):
     email: Optional[str] = None
     telefone: Optional[str]
 class VendedorBase(BaseModel):
-    id: Optional[int] = None
+    id: int
     nome: str
     comissao_percentual: float
 
     class Config:
         orm_mode = True
 
-class VendedorCreate(VendedorBase):
-    pass
+class VendedorCreate(BaseModel):
+    nome: str
+    comissao_percentual: float
 
 class ProdutoBase(BaseModel):
     id: Optional[int] = None
@@ -38,7 +39,7 @@ class ProdutoBase(BaseModel):
 
     class Config:
         orm_mode = True
-        
+
 class ProdutoCreate(BaseModel):
     nome: str
     categoria: str
