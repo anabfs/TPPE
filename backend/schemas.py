@@ -38,9 +38,11 @@ class ProdutoBase(BaseModel):
 
     class Config:
         orm_mode = True
-
-class ProdutoCreate(ProdutoBase):
-    pass
+        
+class ProdutoCreate(BaseModel):
+    nome: str
+    categoria: str
+    preco: float
 
 class VendaBase(BaseModel):
     id: Optional[int] = None

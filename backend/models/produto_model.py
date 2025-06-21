@@ -1,10 +1,13 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import relationship
 from database import Base
+from sqlalchemy import Column, Integer, String, Float
 
 class ModeloProduto(Base):
     __tablename__ = "produto"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    nome = Column(String(100), nullable=False)
-    categoria = Column(String(50), nullable=False)
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String, nullable=False)
+    categoria = Column(String, nullable=False)
     preco = Column(Float, nullable=False)
+
+    itens_venda = relationship("ModeloItemVenda", back_populates="produto")
