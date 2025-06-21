@@ -5,3 +5,6 @@ uvicorn
 pymysql
 sqlalchemy
 pylint
+cryptography
+requests
+httpx

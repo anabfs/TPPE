@@ -6,16 +6,23 @@ services:
       - "5000:5000"
     volumes:
       - ./backend:/app
+    environment:
+      DATABASE_URL: mysql+pymysql://root:root@database/sistema_vendas
     command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
     depends_on:
-      - database
+      database:
+        condition: service_healthy
       
   tests:
     build:
       context: ./backend
     volumes:   
       - ./backend:/app
+    environment:
+      - PYTHONPATH=/app
     command: ["pytest", "--disable-warnings", "-v"]
+    depends_on:
+      - backend
 
   lint:
     build: 
@@ -37,11 +44,15 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: tppe
+      MYSQL_DATABASE: sistema_vendas
     ports:
       - "3306:3306"
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

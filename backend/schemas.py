@@ -15,6 +15,10 @@ class ClienteResponse(ClienteBase):
     class Config:
         orm_mode = True
 
+class ClienteUpdate(BaseModel):
+    nome: Optional[str] = None
+    email: Optional[str] = None
+    telefone: Optional[str]
 class VendedorBase(BaseModel):
     id: Optional[int] = None
     nome: str
