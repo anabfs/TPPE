@@ -10,5 +10,5 @@ class ModeloItemVenda(Base):
     produto_id = Column(Integer, ForeignKey("produto.id"), nullable=False)
     quantidade = Column(Integer, nullable=False)
 
-    venda = relationship("ModeloVenda")
-    produto = relationship("ModeloProduto", back_populates="itens_venda")
+    venda = relationship("ModeloVenda", back_populates="itens_venda")
+    produto = relationship("ModeloProduto")
