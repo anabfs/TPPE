@@ -22,8 +22,8 @@ CREATE TABLE venda (
     data DATE NOT NULL,
     cliente_cpf VARCHAR(14) NOT NULL,
     vendedor_id INT NOT NULL,
-    total DECIMAL(10, 2),
-    comissao DECIMAL(10, 2),
+    total DECIMAL(10, 2) DEFAULT 0.00,
+    comissao DECIMAL(10, 2) DEFAULT 0.00,
     FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf),
     FOREIGN KEY (vendedor_id) REFERENCES vendedor(id)
 );
@@ -32,8 +32,6 @@ CREATE TABLE item_venda (
     venda_id INT NOT NULL,
     produto_id INT NOT NULL,
     quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10, 2) NOT NULL,
-    subtotal DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (venda_id) REFERENCES venda(id),
     FOREIGN KEY (produto_id) REFERENCES produto(id)
 );

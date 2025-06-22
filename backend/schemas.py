@@ -56,19 +56,24 @@ class VendaBase(BaseModel):
     class Config:
         orm_mode = True
 
-class VendaCreate(VendaBase):
-    pass
-
-class ItemVendaBase(BaseModel):
-    id: Optional[int] = None
-    venda_id: int
-    produto_id: int
-    quantidade: int
-    preco_unitario: float
-    subtotal: float
+class VendaCreate(BaseModel):
+    data: date
+    cliente_cpf: str
+    vendedor_id: int
 
     class Config:
         orm_mode = True
 
-class ItemVendaCreate(ItemVendaBase):
-    pass
+class ItemVendaBase(BaseModel):
+    id: int
+    venda_id: int
+    produto_id: int
+    quantidade: int
+
+    class Config:
+        orm_mode = True
+
+class ItemVendaCreate(BaseModel):
+    venda_id: int
+    produto_id: int
+    quantidade: int
