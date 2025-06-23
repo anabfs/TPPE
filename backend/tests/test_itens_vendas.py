@@ -11,7 +11,7 @@ cliente_exemplo = {
     "telefone": "123456789"
 }
 
-@pytest.fixture
+@pytest.mark.usefixtures("novo_cliente")
 def novo_cliente():
     """
     Cria um cliente antes do teste e remove após.
@@ -29,8 +29,8 @@ def novo_cliente():
             client.delete(f"/vendas/vendas/{venda['id']}")
     client.delete(f"/clientes/clientes/{cliente_exemplo['cpf']}")
 
-@pytest.fixture
-def nova_venda(novo_cliente):
+@pytest.fixture 
+def nova_venda():
     """
     Cria uma venda e retorna seu ID.
     """
@@ -46,12 +46,12 @@ def nova_venda(novo_cliente):
     return venda_id
 
 @pytest.fixture
-def test_adicionar_item_venda(nova_venda):
+def test_adicionar_item_venda(nova_venda):# pylint: disable=redefined-outer-name
     """
     Testa o endpoint de adicionar item à venda.
     """
     response = client.post("/itens-venda/itens-venda", json={
-        "venda_id": nova_venda,
+        "venda_id": nova_venda["venda_id"],
         "produto_id": 4,
         "quantidade": 2
     })
