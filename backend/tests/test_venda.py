@@ -27,7 +27,8 @@ def novo_cliente():
             client.delete(f"/vendas/vendas/{venda['id']}")
     client.delete(f"/clientes/clientes/{cliente_exemplo['cpf']}")
 
-def test_criar_venda(novo_cliente):
+@pytest.mark.usefixtures("novo_cliente")
+def test_criar_venda():
     """
     Testa o endpoint POST /vendas para adicionar uma venda.
     """
