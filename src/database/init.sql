@@ -27,11 +27,3 @@ CREATE TABLE venda (
     FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf),
     FOREIGN KEY (vendedor_id) REFERENCES vendedor(id)
 );
-CREATE TABLE item_venda (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    venda_id INT NOT NULL,
-    produto_id INT NOT NULL,
-    quantidade INT NOT NULL,
-    FOREIGN KEY (venda_id) REFERENCES venda(id),
-    FOREIGN KEY (produto_id) REFERENCES produto(id)
-);

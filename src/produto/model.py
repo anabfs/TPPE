@@ -9,5 +9,3 @@ class ModeloProduto(Base):
     nome = Column(String, nullable=False)
     categoria = Column(String, nullable=False)
     preco = Column(Float, nullable=False)
-
-    itens_venda = relationship("ModeloItemVenda", back_populates="produto")

@@ -11,5 +11,3 @@ class ModeloVenda(Base):
     vendedor_id = Column(Integer, ForeignKey("vendedor.id"), nullable=False)
     total = Column(Float, nullable=False, default=0.00)
     comissao = Column(Float, nullable=False, default=0.00)
-
-    itens_venda = relationship("ModeloItemVenda", back_populates="venda")

@@ -63,17 +63,3 @@ class VendaCreate(BaseModel):
 
     class Config:
         orm_mode = True
-
-class ItemVendaBase(BaseModel):
-    id: int
-    venda_id: int
-    produto_id: int
-    quantidade: int
-
-    class Config:
-        orm_mode = True
-
-class ItemVendaCreate(BaseModel):
-    venda_id: int
-    produto_id: int
-    quantidade: int
