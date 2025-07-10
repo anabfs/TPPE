@@ -24,22 +24,22 @@ def adicionar_vendedor(vendedor: VendedorCreate, db: Session = Depends(get_db)):
     db.refresh(novo_vendedor)
     return novo_vendedor
 
-@router.get("/vendedores/{vendedor_id}", response_model=VendedorBase)
-def buscar_vendedor(vendedor_id: int, db: Session = Depends(get_db)):
+@router.get("/vendedores/{vendedor_cpf}", response_model=VendedorBase)
+def buscar_vendedor(vendedor_cpf: str, db: Session = Depends(get_db)):
     """
-    Busca um vendedor pelo ID.
+    Busca um vendedor pelo CPF.
     """
-    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == vendedor_id).first()
+    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.cpf == vendedor_cpf).first()
     if not vendedor:
         raise HTTPException(status_code=404, detail="Vendedor não encontrado")
     return vendedor
 
-@router.put("/vendedores/{vendedor_id}", response_model=VendedorBase)
-def atualizar_vendedor(vendedor_id: int, vendedor_update: VendedorCreate, db: Session = Depends(get_db)):
+@router.put("/vendedores/{vendedor_cpf}", response_model=VendedorBase)
+def atualizar_vendedor(vendedor_cpf: str, vendedor_update: VendedorCreate, db: Session = Depends(get_db)):
     """
     Atualiza os dados de um vendedor existente.
     """
-    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == vendedor_id).first()
+    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.cpf == vendedor_cpf).first()
     if not vendedor:
         raise HTTPException(status_code=404, detail="Vendedor não encontrado")
     
@@ -50,12 +50,12 @@ def atualizar_vendedor(vendedor_id: int, vendedor_update: VendedorCreate, db: Se
     db.refresh(vendedor)
     return vendedor
 
-@router.delete("/vendedores/{vendedor_id}")
-def remover_vendedor(vendedor_id: int, db: Session = Depends(get_db)):
+@router.delete("/vendedores/{vendedor_cpf}")
+def remover_vendedor(vendedor_cpf: str, db: Session = Depends(get_db)):
     """
-    Remove um vendedor pelo ID.
+    Remove um vendedor pelo CPF.
     """
-    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.id == vendedor_id).first()
+    vendedor = db.query(ModeloVendedor).filter(ModeloVendedor.cpf == vendedor_cpf).first()
     if not vendedor:
         raise HTTPException(status_code=404, detail="Vendedor não encontrado")
     db.delete(vendedor)

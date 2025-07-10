@@ -6,7 +6,10 @@ client = TestClient(app)
 
 # Vendedor de exemplo
 vendedor_exemplo = {
+    "cpf": "12345678901",
     "nome": "João Vendedor",
+    "email": "joao@email.com",
+    "telefone": "11999999999",
     "comissao_percentual": 10.5
 }
 
@@ -18,7 +21,7 @@ def novo_vendedor():
     response = client.post("/vendedores/vendedores", json=vendedor_exemplo)
     assert response.status_code == 200
     yield response.json()
-    client.delete(f"/vendedores/vendedores/{response.json()['id']}")
+    client.delete(f"/vendedores/vendedores/{vendedor_exemplo['cpf']}")
 
 def test_adicionar_vendedor():
     """
@@ -26,9 +29,13 @@ def test_adicionar_vendedor():
     """
     response = client.post("/vendedores/vendedores", json=vendedor_exemplo)
     assert response.status_code == 200
+    assert response.json()["cpf"] == vendedor_exemplo["cpf"]
     assert response.json()["nome"] == vendedor_exemplo["nome"]
+    assert response.json()["email"] == vendedor_exemplo["email"]
+    assert response.json()["telefone"] == vendedor_exemplo["telefone"]
     assert response.json()["comissao_percentual"] == vendedor_exemplo["comissao_percentual"]
-    client.delete(f"/vendedores/vendedores/{response.json()['id']}")  # Cleanup
+    client.delete(f"/vendedores/vendedores/{vendedor_exemplo['cpf']}")
+
 
 @pytest.mark.usefixtures("novo_vendedor")
 def test_listar_vendedores():
@@ -37,36 +44,41 @@ def test_listar_vendedores():
     """
     response = client.get("/vendedores/vendedores")
     assert response.status_code == 200
-    assert any(vendedor["nome"] == vendedor_exemplo["nome"] for vendedor in response.json())
+    assert any(vendedor["cpf"] == vendedor_exemplo["cpf"] for vendedor in response.json())
 
 @pytest.mark.usefixtures("novo_vendedor")
 def test_buscar_vendedor():
     """
-    Testa o endpoint GET /vendedores/{id} para buscar um vendedor pelo ID.
+    Testa o endpoint GET /vendedores/{cpf} para buscar um vendedor pelo CPF.
     """
-    vendedor_id = client.post("/vendedores/vendedores", json=vendedor_exemplo).json()["id"]
-    response = client.get(f"/vendedores/vendedores/{vendedor_id}")
+    response = client.get(f"/vendedores/vendedores/{vendedor_exemplo['cpf']}")
     assert response.status_code == 200
-    assert response.json()["nome"] == vendedor_exemplo["nome"]
+    assert response.json()["cpf"] == vendedor_exemplo["cpf"]
+
 
 @pytest.mark.usefixtures("novo_vendedor")
 def test_atualizar_vendedor():
     """
-    Testa o endpoint PUT /vendedores/{id} para atualizar um vendedor.
+    Testa o endpoint PUT /vendedores/{cpf} para atualizar um vendedor.
     """
-    vendedor_id = client.post("/vendedores/vendedores", json=vendedor_exemplo).json()["id"]
-    novo_dado = {"nome": "João Atualizado", "comissao_percentual": 15.0}
-    response = client.put(f"/vendedores/vendedores/{vendedor_id}", json=novo_dado)
+    vendedor_cpf = vendedor_exemplo["cpf"]
+    novo_dado = {"cpf": vendedor_cpf,
+    "nome": "João Vendedor",
+    "email": "joaonovo@email.com",
+    "telefone": "15999999999",
+    "comissao_percentual": 10.0}
+    response = client.put(f"/vendedores/vendedores/{vendedor_cpf}", json=novo_dado)
     assert response.status_code == 200
     assert response.json()["nome"] == novo_dado["nome"]
+    assert response.json()["email"] == novo_dado["email"]
+    assert response.json()["telefone"] == novo_dado["telefone"]
     assert response.json()["comissao_percentual"] == novo_dado["comissao_percentual"]
 
-@pytest.mark.usefixtures("novo_vendedor")
 def test_remover_vendedor():
     """
-    Testa o endpoint DELETE /vendedores/{id} para remover um vendedor.
+    Testa o endpoint DELETE /vendedores/{cpf} para remover um vendedor.
     """
-    vendedor_id = client.post("/vendedores/vendedores", json=vendedor_exemplo).json()["id"]
-    response = client.delete(f"/vendedores/vendedores/{vendedor_id}")
+    vendedor_cpf = client.post("/vendedores/vendedores", json=vendedor_exemplo).json()["cpf"]
+    response = client.delete(f"/vendedores/vendedores/{vendedor_exemplo['cpf']}")
     assert response.status_code == 200
     assert response.json()["message"] == "Vendedor removido com sucesso!"

@@ -23,13 +23,13 @@ class ControleVendedor:
         """
         self.vendedores.append(vendedor)
 
-    def buscar_vendedor_por_id(self, id_vendedor):
+    def buscar_vendedor_por_cpf(self, cpf_vendedor):
         """
         Busca um vendedor pelo ID.
         :param id_vendedor: int
         :return: Objeto ModeloVendedor ou None
         """
         for vendedor in self.vendedores:
-            if vendedor.id == id_vendedor:
+            if vendedor.cpf == cpf_vendedor:
                 return vendedor
         return None
