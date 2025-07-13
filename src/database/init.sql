@@ -16,9 +16,8 @@ CREATE TABLE vendedor (
 CREATE TABLE produto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    categoria VARCHAR(50) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
-    quantidade INT NOT NULL
+    estoque INT NOT NULL DEFAULT 0
 );
 CREATE TABLE venda (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,6 +27,7 @@ CREATE TABLE venda (
     produto_id INT NOT NULL,
     total DECIMAL(10, 2) DEFAULT 0.00,
     comissao DECIMAL(10, 2) DEFAULT 0.00,
+    quantidade INT NOT NULL DEFAULT 1,
     FOREIGN KEY (cliente_cpf) REFERENCES cliente(cpf),
     FOREIGN KEY (vendedor_cpf) REFERENCES vendedor(cpf),
     FOREIGN KEY (produto_id) REFERENCES produto(id)
