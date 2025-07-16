@@ -8,7 +8,7 @@ class ModeloVenda(Base):
     id = Column(Integer, primary_key=True, index=True)
     data = Column(Date, nullable=False)
     cliente_cpf = Column(String, ForeignKey("cliente.cpf"), nullable=False)
-    vendedor_cpf = Column(Integer, ForeignKey("vendedor.cpf"), nullable=False)
+    vendedor_cpf = Column(String, ForeignKey("vendedor.cpf"), nullable=False)
     produto_id = Column(Integer, ForeignKey("produto.id"), nullable=False)
     total = Column(Float, nullable=False, default=0.00)
     comissao = Column(Float, nullable=False, default=0.00)

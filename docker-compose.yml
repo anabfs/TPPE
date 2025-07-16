@@ -7,7 +7,7 @@ services:
     volumes:
       - ./src:/app
     environment:
-      DATABASE_URL: postgresql+psycopg2://postgres:postgres@database/sistema_vendas
+      DATABASE_URL: postgresql+psycopg2://sistema_vendas_7zqo_user:74eSCWjIpYgcJ61NHaJ3koMssVB0AGIZ@dpg-d1rdutvdiees73bqunug-a.oregon-postgres.render.com/sistema_vendas_7zqo
     command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
     depends_on:
       database:

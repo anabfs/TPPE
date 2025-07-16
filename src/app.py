@@ -5,8 +5,11 @@ from produto.router import router as produtos
 from venda.router import router as vendas
 from fastapi.middleware.cors import CORSMiddleware
 
+from database import Base, engine  
+
 app = FastAPI()
 
+Base.metadata.create_all(bind=engine)
 app.include_router(clientes, prefix="/clientes", tags=["Clientes"])
 app.include_router(vendedores, prefix="/vendedores", tags=["Vendedores"])
 app.include_router(produtos, prefix="/produtos", tags=["Produtos"])
@@ -18,7 +21,10 @@ def root():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Em produção, use o domínio do frontend
+allow_origins=[
+    "http://localhost:3000",  # Front local
+    "https://sistema-vendas-front.vercel.app",  # Front em produção
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
