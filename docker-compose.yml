@@ -7,11 +7,8 @@ services:
     volumes:
       - ./src:/app
     environment:
-      DATABASE_URL: postgresql+psycopg2://sistema_vendas_7zqo_user:74eSCWjIpYgcJ61NHaJ3koMssVB0AGIZ@dpg-d1rdutvdiees73bqunug-a.oregon-postgres.render.com/sistema_vendas_7zqo
+      DATABASE_URL: postgresql://sistema_vendas_dugp_user:GmVnOSCBXs6n85ivGVXezERzuE2rfdp4@dpg-d1ujm415pdvs73fnf2og-a.oregon-postgres.render.com:5432/sistema_vendas_dugp
     command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
-    depends_on:
-      database:
-        condition: service_healthy
       
   tests:
     build:
@@ -32,31 +29,3 @@ services:
     environment:
       - PYTHONPATH=/app
     command: ["pylint", "--disable=R,C", "."]
-
-  database:
-    image: postgres:14
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: sistema_vendas
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./src/database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
-      interval: 10s
-      retries: 5
-
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    environment:
-      PMA_HOST: database
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "8080:80"
-    depends_on:
-      - database
